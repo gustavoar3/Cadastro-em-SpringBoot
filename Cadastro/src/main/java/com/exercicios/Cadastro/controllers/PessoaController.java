@@ -37,7 +37,7 @@ public class PessoaController {
     }
 	
     @GetMapping("/aniversario")
-    public ResponseEntity<List<Pessoa>> listaAniversario(){
+    public ResponseEntity<List<String>> listaAniversario(){
         return new ResponseEntity<>(pessoaService.listaAniversario(), HttpStatus.OK);
     }
 
@@ -49,6 +49,10 @@ public class PessoaController {
     @PostMapping("/incluir")
     public ResponseEntity<IncluirPessoaResponse> cadastrar(@RequestParam String pessoaData) throws IOException{
     	final var incluirPessoaCadastro = mapper.readValue(pessoaData, IncluirPessoaCadastro.class);
+    	
+    	if(pessoaService.validaDados(incluirPessoaCadastro) == HttpStatus.BAD_REQUEST) {
+    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    	}
     	
     	var pessoa = pessoaService.armazenar(incluirPessoaCadastro);
     	

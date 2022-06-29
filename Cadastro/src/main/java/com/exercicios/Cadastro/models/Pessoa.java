@@ -1,5 +1,7 @@
 package com.exercicios.Cadastro.models;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -44,10 +46,10 @@ public class Pessoa {
 	}
 	
 	public void setNome(String nome) {
-		if(validaNome(nome) == HttpStatus.OK) this.nome = nome;
+		this.nome = nome;
 	}
 	
-	private HttpStatus validaNome(String nome) {
+	public HttpStatus validaNome(String nome) {
 		if(nome.length() < 5 || nome.length() > 80) return HttpStatus.BAD_REQUEST;
 		return HttpStatus.OK;
 	}
@@ -57,10 +59,11 @@ public class Pessoa {
 	}
 	
 	public void setCpf(String cpf) {
-		if(validaCpf(cpf) == HttpStatus.OK) this.cpf = cpf;
+ 
+		this.cpf = cpf;
 	}
 	
-	private HttpStatus validaCpf(String cpf) {
+	public HttpStatus validaCpf(String cpf) {
 		if(cpf.length() != 11) return HttpStatus.BAD_REQUEST;
 		return HttpStatus.OK;
 	}
@@ -71,6 +74,16 @@ public class Pessoa {
 	
 	public void setNascimento(String nascimento) {
 		this.nascimento = nascimento;
+	}
+	
+	public HttpStatus validaNascimento(String nascimento) {
+		LocalDate now = LocalDate.now();
+		DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate niver = LocalDate.parse(nascimento, formatterData);
+		
+		if(now.getYear() - niver.getYear() < 18) return HttpStatus.BAD_REQUEST;
+		
+		return HttpStatus.OK;
 	}
 	
 	public String getTipo() {

@@ -19,12 +19,7 @@ public class IncluirPessoaCadastro {
 	}
 	
 	public void setNome(String nome) {
-		if(validaNome(nome) == HttpStatus.OK) this.nome = nome;
-	}
-	
-	private HttpStatus validaNome(String nome) {
-		if(nome.length() < 5 || nome.length() > 80) return HttpStatus.BAD_REQUEST;
-		return HttpStatus.OK;
+		this.nome = nome;
 	}
 
 	public String getCpf() {
@@ -32,12 +27,7 @@ public class IncluirPessoaCadastro {
 	}
 	
 	public void setCpf(String cpf) {
-		if(validaCpf(cpf) == HttpStatus.OK) this.cpf = cpf;
-	}
-	
-	private HttpStatus validaCpf(String cpf) {
-		if(cpf.length() != 11) return HttpStatus.BAD_REQUEST;
-		return HttpStatus.OK;
+		this.cpf = cpf;
 	}
 
 	public String getNascimento() {
