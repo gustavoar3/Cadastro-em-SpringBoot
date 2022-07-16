@@ -1,5 +1,6 @@
 package com.exercicios.Cadastro.services;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -16,23 +17,22 @@ import com.exercicios.Cadastro.repository.PessoaRepository;
 @Service
 public class PessoaService {
 	
-	private final PessoaRepository pessoaRepository;
+	private PessoaRepository pessoaRepository;
 	
-	public HttpStatus validaDados(IncluirPessoaCadastro incluirPessoaCadastro){
+	public PessoaService(PessoaRepository pessoaRepository) {
+		this.pessoaRepository = pessoaRepository;
+	}
+	
+	public HttpStatus validaDados(IncluirPessoaCadastro incluirPessoaCadastro) throws IOException{
 		var pessoa = new Pessoa();
 		
 		if(pessoa.validaCpf(incluirPessoaCadastro.getCpf()) == HttpStatus.BAD_REQUEST 
 				|| pessoa.validaNome(incluirPessoaCadastro.getNome()) == HttpStatus.BAD_REQUEST
 				|| pessoa.validaNascimento(incluirPessoaCadastro.getNascimento()) == HttpStatus.BAD_REQUEST) {
-			System.out.println("Erro ao cadastrar usuário. Algum campo está Incorreto, tente novamente.");
 			return HttpStatus.BAD_REQUEST;
 		}
 		
 		return HttpStatus.OK;
-	}
-	
-	public PessoaService(PessoaRepository pessoaRepository) {
-		this.pessoaRepository = pessoaRepository;
 	}
 	
 	public List<String> listaAniversario(){
@@ -40,7 +40,7 @@ public class PessoaService {
 		
 		LocalDate now = LocalDate.now();
 		DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-				
+		
 		for(var p : pessoaRepository.findAll()) {
 			LocalDate dateNascimento = LocalDate.parse(p.getNascimento(), formatterData);
 			
@@ -51,6 +51,7 @@ public class PessoaService {
 	}
 	
 	public List<Pessoa> listaCpf(String cpf){
+		if(pessoaRepository.findByCpf(cpf).size() == 0) System.out.println("Erro ao encontrar usuário. Tente novamente.");
 		return pessoaRepository.findByCpf(cpf);
 	}
 	

@@ -37,21 +37,23 @@ public class PessoaController {
     }
 	
     @GetMapping("/aniversario")
-    public ResponseEntity<List<String>> listaAniversario(){
-        return new ResponseEntity<>(pessoaService.listaAniversario(), HttpStatus.OK);
+    public ResponseEntity<?> listaAniversario(){
+		if(pessoaService.listaAniversario().size() == 0) return new ResponseEntity<>("Erro ao encontrar usuário. Tente novamente.", HttpStatus.NOT_ACCEPTABLE);
+    	return new ResponseEntity<>(pessoaService.listaAniversario(), HttpStatus.OK);
     }
 
     @GetMapping("{cpf}")
-    public ResponseEntity<List<Pessoa>> listaCpf(@PathVariable("cpf") String cpf){
-        return new ResponseEntity<>(pessoaService.listaCpf(cpf), HttpStatus.OK);
+    public ResponseEntity<?> listaCpf(@PathVariable("cpf") String cpf){
+    	if(pessoaService.listaCpf(cpf).size() == 0) return new ResponseEntity<>("Erro ao encontrar usuário. Tente novamente.", HttpStatus.NOT_ACCEPTABLE);
+    	return new ResponseEntity<>(pessoaService.listaCpf(cpf), HttpStatus.OK);
     }
     
     @PostMapping("/incluir")
-    public ResponseEntity<IncluirPessoaResponse> cadastrar(@RequestParam String pessoaData) throws IOException{
+    public ResponseEntity<?> cadastrar(@RequestParam String pessoaData) throws IOException{
     	final var incluirPessoaCadastro = mapper.readValue(pessoaData, IncluirPessoaCadastro.class);
     	
     	if(pessoaService.validaDados(incluirPessoaCadastro) == HttpStatus.BAD_REQUEST) {
-    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    		return new ResponseEntity<>("Erro ao cadastrar usuário. Algum campo está Incorreto, tente novamente.", HttpStatus.BAD_REQUEST);
     	}
     	
     	var pessoa = pessoaService.armazenar(incluirPessoaCadastro);

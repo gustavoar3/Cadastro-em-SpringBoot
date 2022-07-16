@@ -1,7 +1,5 @@
 package com.exercicios.Cadastro.controllers.form;
 
-import org.springframework.http.HttpStatus;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
