@@ -43,7 +43,7 @@ public class PessoaService {
 		LocalDate now = LocalDate.now();
 		DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		
-		for(var p : pessoaRepository.findAll()) {
+		for(var p : pessoaRepository.selectAll()) {
 			LocalDate dateNascimento = LocalDate.parse(p.getNascimento(), formatterData);
 			
 			if(dateNascimento.getDayOfYear() >= now.getDayOfYear() && dateNascimento.getDayOfYear() < now.getDayOfYear() + 7) res.add(p.getCpf());
@@ -53,24 +53,24 @@ public class PessoaService {
 	}
 	
 	public List<Pessoa> listaCpf(String cpf){
-		if(pessoaRepository.findByCpf(cpf).size() == 0) System.out.println("Erro ao encontrar usuário. Tente novamente.");
-		return pessoaRepository.findByCpf(cpf);
+		if(pessoaRepository.selectCpf(cpf).size() == 0) System.out.println("Erro ao encontrar usuário. Tente novamente.");
+		return pessoaRepository.selectCpf(cpf);
 	}
 	
 	public void removerId(Long id){
-		pessoaRepository.deleteById(id);
+		pessoaRepository.deleteId(id);
 	}
 
 	public Pessoa armazenar(IncluirPessoaCadastro incluirPessoaCadastro) {
 		var pessoa = new Pessoa();
 		
 		BeanUtils.copyProperties(incluirPessoaCadastro, pessoa);
-		pessoaRepository.save(pessoa);
+		pessoaRepository.saveCadastro(pessoa);
 		
 		return pessoa;			
 	} 
 
 	public List<Pessoa> listaTodos() {
-		return pessoaRepository.findAll();
+		return pessoaRepository.selectAll();
 	}
 }
