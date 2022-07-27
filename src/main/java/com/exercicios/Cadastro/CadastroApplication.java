@@ -1,5 +1,7 @@
 package com.exercicios.Cadastro;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +25,14 @@ public class CadastroApplication implements CommandLineRunner{
 	
 	@Override
 	public void run(String... args) throws Exception{
-		String sql = "SELECT * FROM PessoaCadastro";
-		List<Pessoa> pessoa = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Pessoa.class));
 		
-		pessoa.forEach(System.out :: println);
+		//String Url = "jdbc:sqlserver://DESKTOP-SELLT0L;databaseName=TestsSql";
+		//Connection conn = DriverManager.getConnection(Url);
+		
+		//String sql = "SELECT * FROM PessoaCadastro";
+		//List<Pessoa> pessoa = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Pessoa.class));
+		
+		//pessoa.forEach(System.out :: println);
 	}
 	
 	
