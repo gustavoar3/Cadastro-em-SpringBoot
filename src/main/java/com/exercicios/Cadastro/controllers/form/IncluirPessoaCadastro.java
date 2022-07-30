@@ -1,5 +1,9 @@
 package com.exercicios.Cadastro.controllers.form;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
@@ -7,6 +11,7 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class IncluirPessoaCadastro {
+	
 	private String nome;
 	private String cpf;
 	private String nascimento;
@@ -42,5 +47,13 @@ public class IncluirPessoaCadastro {
 	
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 }

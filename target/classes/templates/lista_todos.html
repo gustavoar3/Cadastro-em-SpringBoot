@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <title>Cadastro em SpringBoot</title>
+    </head>
+    <body>
+        <a th:href="@{/cadastro/}">Voltar</a>
+        <div>
+            <span class="contact100-form-title">
+                Usuários
+            </span>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nome</th>
+                            <th>cpf</th>
+                            <th>Nascimento</th>
+                            <th>Gênero</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="pessoa : ${listaTudo}">
+                            <td th:text="${pessoa.id}"></td>
+                            <td th:text="${pessoa.nome}"></td>
+                            <td th:text="${pessoa.cpf}"></td>
+                            <td th:text="${pessoa.nascimento}"></td>
+                            <td th:text="${pessoa.tipo}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
