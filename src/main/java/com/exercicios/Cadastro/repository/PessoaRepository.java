@@ -13,4 +13,7 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Long>{
 	
 	List<Pessoa> findByCpf(String cpf);
 	
+	@Query("Select p from Pessoa p")
+	List<Pessoa> selectAll();
+	
 }
